@@ -4,10 +4,12 @@ import json
 from dotenv import load_dotenv
 from database import init_db
 from tools import TOOL_DEFINITIONS, execute_tool
+import streamlit as st
 
 load_dotenv()
 
-client = Groq(api_key=os.getenv("GROQ_API_KEY"))
+api_key = os.getenv("GROQ_API_KEY") or st.secrets.get("GROQ_API_KEY", None)
+client = Groq(api_key=api_key)
 MODEL = "llama-3.3-70b-versatile"
 
 SYSTEM_PROMPT = """
